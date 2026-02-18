@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Something For You</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(to bottom,#2a003f,#0f0c29);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+
+/* Floating HETSI */
+.background{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+}
+.background span{
+  position:absolute;
+  color:rgba(255,182,230,0.08);
+  font-size:40px;
+  animation:float 25s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-100vh);}
+}
+
+/* Main Card */
+.card{
+  position:relative;
+  z-index:2;
+  width:90%;
+  max-width:600px;
+  min-height:300px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(255,182,230,0.3);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.text{
+  font-size:18px;
+  line-height:1.6;
+  min-height:150px;
+}
+
+.buttons{
+  margin-top:20px;
+}
+
+button{
+  padding:10px 20px;
+  margin:5px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.15);
+  color:white;
+  border:1px solid rgba(255,182,230,0.5);
+  transition:0.3s;
+}
+button:hover{
+  background:rgba(255,182,230,0.3);
+}
+
+.fade{
+  animation:fadeIn 0.8s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="background" id="bg"></div>
+
+<div class="card fade">
+  <div class="text" id="text"></div>
+  <div class="buttons" id="buttons"></div>
+</div>
+
+<script>
+/* Floating HETSI */
+const bg=document.getElementById("bg");
+for(let i=0;i<25;i++){
+  let span=document.createElement("span");
+  span.innerText="HETSI";
+  span.style.left=Math.random()*100+"%";
+  span.style.fontSize=(20+Math.random()*30)+"px";
+  span.style.animationDuration=(20+Math.random()*20)+"s";
+  bg.appendChild(span);
+}
+
+/* Typewriter */
+function typeWriter(text,callback){
+  const target=document.getElementById("text");
+  target.innerHTML="";
+  let i=0;
+  function typing(){
+    if(i<text.length){
+      target.innerHTML+=text.charAt(i)==="\n"?"<br>":text.charAt(i);
+      i++;
+      setTimeout(typing,30);
+    }else{
+      if(callback) callback();
+    }
+  }
+  typing();
+}
+
+const btnArea=document.getElementById("buttons");
+
+function clearButtons(){
+  btnArea.innerHTML="";
+}
+
+function addButton(label,action){
+  const btn=document.createElement("button");
+  btn.innerText=label;
+  btn.onclick=action;
+  btnArea.appendChild(btn);
+}
+
+/* FLOW START */
+
+function screen1(){
+  clearButtons();
+  typeWriter("Dear cutieeeeeee…\nReady for something new?",()=>{
+    addButton("Let’s Begin",screen2);
+  });
+}
+
+function screen2(){
+  clearButtons();
+  typeWriter("Some things I knew…",()=>{
+    setTimeout(()=>{
+      typeWriter(
+"✔ Name — Hetsi\n✔ Birthday — 13 October\n✔ Favourite Colour — Black\n✔ Hobby — Drawing\n✔ Smile — Best smile\n✔ Eyes — Deep and beautiful\n✔ Voice — Sweet tone\n✔ Hair — Soft and beautiful\n✔ Expressions — Expression queen\n✔ Cutest — Always\n\nBut these were just the basics.",
+      ()=>{
+        addButton("Let’s do something different",flower);
+      });
+    },800);
+  });
+}
+
+/* TEMPLATE FOR QUESTIONS */
+
+function question(title,answer,next){
+  clearButtons();
+  typeWriter(title,()=>{
+    addButton("Ask Me",()=>{
+      clearButtons();
+      typeWriter(answer,()=>{
+        addButton("Next",next);
+      });
+    });
+    addButton("Skip",()=>{
+      clearButtons();
+      typeWriter("Oh nooo…\nYou can’t skip this one.\nPlease… just once.",()=>{
+        addButton("Fine, Ask Me",()=>{
+          clearButtons();
+          typeWriter(answer,()=>{
+            addButton("Next",next);
+          });
+        });
+      });
+    });
+  });
+}
+
+/* Questions */
+
+function flower(){
+  question(
+"If you were a flower…",
+"You would definitely be a rose.\n\nNot just because roses are beautiful — but because you are even more beautiful than a rose.\n\nJust like every petal of a rose reflects beauty, you reflect politeness, softness, happiness, lightness, and pure prettiness in yourself.",
+  season);
+}
+
+function season(){
+  question(
+"If you were a season…",
+"You would be a lovely winter.\n\nCalm, soft, peaceful, and beautiful.\n\nThe kind of season that gives lovely sweet mornings, gentle sunsets, and quiet early sunrises.\n\nJust like your voice, your eyes, and your heart — soft and beautiful in their own way.",
+  book);
+}
+
+function book(){
+  question(
+"If you were a book…",
+"You would be a timeless love story.\n\nNot loud. Not dramatic.\nBut quietly powerful.\n\nThe kind of story where the princess is both cute and mature, soft in heart, strong in values.\n\nA story that teaches that real beauty is not just seen — it is felt.",
+  song);
+}
+
+function song(){
+  question(
+"If you were a song…",
+"You would be 'Finding Her.'\n\nA soft melody that slowly touches the heart.\nCalm, sweet, and deep — just like your voice and presence.\n\nA song that doesn’t need loud music to be beautiful. It just needs to be felt.",
+  shayari);
+}
+
+function shayari(){
+  question(
+"If you were a shayari…",
+"Agar tum ek shayari hoti,\ntoh har lafz mein narmi aur noor hota.\n\nTumhari awaaz jaise halki si sargam,\njo dil ko bina shor ke chhoo jaati.\n\nHawa se baatein karti tumhari zulfein,\naur tumhari muskaan… jaise khud khushi sharma jaaye.",
+  place);
+}
+
+function place(){
+  question(
+"If you were a place…",
+"You wouldn’t be a crowded city.\n\nYou would be a quiet hill station.\nA calm, cold place where everything feels peaceful.\n\nThe kind of place that makes someone slow down, breathe deeply, and feel closer to their own heart.\n\nJust being there feels enough — just like being with you.",
+  feeling);
+}
+
+function feeling(){
+  question(
+"If you were a feeling…",
+"You would be the kind that brings a smile to the face and peace to the heart.\n\nThe kind where not just the lips smile — but the heart smiles too.\n\nThe kind that makes everything feel lighter and quietly beautiful.",
+  moon);
+}
+
+function moon(){
+  question(
+"If you were the moon…",
+"You would be the calm, beautiful one that appears quietly and changes the whole night.\n\nJust the way looking at the moon brings relief to the heart, seeing you gives me that same peace.\n\nNo noise. No words. Just quiet comfort.",
+  world);
+}
+
+function world(){
+  question(
+"If you were my world…",
+"You would be the calm one.\nNot loud. Not chaotic.\n\nJust simple, beautiful, and full of the little things that make my heart feel complete.\n\nBut the truth is… you are not 'if.'\n\nYou are my world already.\n\nAnd because you and your smile have always been and will always be my priority.",
+  finalScreen);
+}
+
+function finalScreen(){
+  clearButtons();
+  typeWriter("Really…\nI can’t believe how someone can be so beautiful and so good at the same time.\n\nBut my favorite thing about you is your voice, your deep eyes, your smile, and your hair curls playing softly with the air.\n\nI hope you really liked this.",()=>{});
+}
+
+screen1();
+</script>
+
+</body>
+</html>
